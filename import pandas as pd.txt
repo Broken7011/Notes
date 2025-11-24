@@ -19,3 +19,6 @@ print(df.head())
 ## df.tail() --> last 5 rows
 ## df.info() --> structure of the dataset
 ## df.describe() --> statistics for numeric columns
+
+new
+
