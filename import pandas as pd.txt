@@ -20,5 +20,13 @@ print(df.head())
 ## df.info() --> structure of the dataset
 ## df.describe() --> statistics for numeric columns
 
-new
 
+## df["column_name"] --> gives you series (column)
+## df[["col1","col2"]] --> gives you a dataFrame with multiple columns 
+
+
+Assume sales_df has a column called "price".
+
+Write one line of code to select only that column from sales_df. ==== sales_df["price"]
+
+Write one line that selects product and brand only. ==== sales_df[["product","brand"]]
