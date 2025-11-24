@@ -1,0 +1,21 @@
+import pandas as pd
+
+table1 = {
+   "product": ["Laptop","Phone","Laptop"],
+   "price" : [60000,30000,20000],
+   "brand" : ["Dell","Samsung","Apple"]
+}
+newdf = pd.DataFrame(table1)
+newdf OR print(newdf)
+
+
+##  Reading data 
+
+import pandas as pd
+sales_df = pd.read_csv("sales.csv")
+print(df.head()) 
+
+## df.head() --> first 5 rows
+## df.tail() --> last 5 rows
+## df.info() --> structure of the dataset
+## df.describe() --> statistics for numeric columns
