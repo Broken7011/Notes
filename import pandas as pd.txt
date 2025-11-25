@@ -59,3 +59,18 @@ df["discounted_price"] = df["price"] * 0.9
 
 Write one line to create a new column called "price_with_tax"
 == > sales_df["price_with_tax"] = sales_df["price"] * 1.18
+
+# SORTING DATA
+
+df.sort_values("price")
+df.sort_values("price",ascending=False)
+## sort by multiple columns 
+df.sort_values(["brand","price"])
+
+sales_df.sort_values("price",ascending=False)
+
+
+
+## df[df["price"] > 30000][["product", "price"]]
+Give me only rows where price > 30000,
+and from those rows, show only product and price columns
