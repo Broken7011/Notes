@@ -37,5 +37,25 @@ give me all rows where age is greater than 25.
 
 df[df["city"] == "Delhi"]
 
+sales_df[sales_df["price"]>30000]
+
+df[(df["age"] > 25) & (df["city"] == "Delhi")]
+Use () around each condition
+
+Use & for AND    ] Never use and or or — pandas will complain.
+
+Use | for OR
+
+## ==> sales_df[(sales_df["price"] > 30000) & (sales_df["brand"] =="Dell")]
+
+## Creating New Columns
+df["age_in_5_years"] = df["age"] + 5
+
+df["full_name"] = df["first_name"] + " " + df["last_name"]
+df["discounted_price"] = df["price"] * 0.9
 
 
+
+
+Write one line to create a new column called "price_with_tax"
+== > sales_df["price_with_tax"] = sales_df["price"] * 1.18
