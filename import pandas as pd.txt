@@ -74,3 +74,41 @@ sales_df.sort_values("price",ascending=False)
 ## df[df["price"] > 30000][["product", "price"]]
 Give me only rows where price > 30000,
 and from those rows, show only product and price columns
+
+sales_df[sales_df["brand"]=="Samsung"][["product","price"]]
+
+## RESETTING THE INDEX 
+filtered = df[df["price"]>30000]
+filtered = filtered.reset_index(drop=True)
+reset_index() gives you fresh row numbers
+
+drop=True prevents the old index from becoming a new column
+
+expensive = sales_df(sales_df["price"]>30000)
+expensive = expensive.reset_index(drop=True)
+
+
+
+#### loc is how you select rows + columns in a clean, explicit way.
+df.loc[0]  # row by index
+df.loc[0:5]  # row slice
+df.loc[:,"price"] # all rows one column
+df.loc[:,["product","bran"]] 
+df.loc[df["price"]>30000],["product","price"]]
+# loc == [row_selection,column_selection]
+
+sales_df.loc[sales_df["price"]>30000,["product","price"]]
+loc = select by labels
+iloc = select by index positions
+
+df.iloc[0]            # first row
+df.iloc[0:3]          # first three rows
+df.iloc[:, 0]         # all rows, first column
+df.iloc[:, 0:2]       # all rows, first two columns
+df.iloc[2, 1]         # row 2, column 1 (single cell)
+
+sales_df.iloc[:,0:2]
+
+
+
+### RENAMING 
