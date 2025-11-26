@@ -130,4 +130,52 @@ df.dropna() # drop the rows
 df.fillna(0)  # fill the missing values
 df.fillna("Unknown")
 
+sales_df.fillna("Unknonwn",inplace=True) | sales_df = sales_df.fillna("Unknown")
+With inplace=True, this extra assignment isn’t needed because the change happens in the original object.
 
+
+## Values counts how many times each unique value appears
+df["brand"].value_counts()
+sales_df["product"].value_counts()
+df["product"].unique()      # list of unique values
+df["product"].nunique()     # count of unique values
+sales_df["brand"].nunique()
+
+nunique() tells you how many unique boxes exist
+value_counts() tells you what’s inside each box and how much
+
+
+groupby lets you answer questions like:
+Total sales per product
+Average price per brand
+Count of orders per city
+Anything “by category”
+
+It’s like SQL’s GROUP BY, but smoother.
+df.groupby("brand")["price"].mean() # avg Group rows by brand, then take the mean of price
+df.groupby("product")["price"].sum()
+
+sales_df.groupby("product")["unit_price"].mean()
+
+# df.groupby("product")[["unit_price", "quantity"]].mean()
+df.groupby("product").agg({
+    "unit_price": "mean",
+    "quantity": "sum"            } Multiple calculations
+})
+
+sales_df.groupby("product")["quantity"].sum()
+
+sales_df.groupby("product").agg(
+ {
+   "unit_price": "mean",
+   "quantity": "sum"
+}
+)
+
+## df.groupby("product")["quantity"].sum().sort_values(ascending=False)
+sales_df.groupby("product").agg(
+ {
+   "unit_price": "mean",
+   "quantity": "sum"
+}
+).sort_values(by="quantity",ascending=False)
