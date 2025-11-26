@@ -179,3 +179,107 @@ sales_df.groupby("product").agg(
    "quantity": "sum"
 }
 ).sort_values(by="quantity",ascending=False)
+
+
+### MERGING dataframes
+pd.merge(df1, df2, on="product_id", how="inner")
+Common how values:
+
+"inner" → only matching rows
+
+"left" → keep everything from left table
+
+"right" → keep everything from right
+
+"outer" → keep everything from both
+
+pd.merge(sales_df,products_df,on="product_id",how="inner")
+
+
+### MERGE WITH DIFFERENT column_names
+pd.merge(df1, df2, left_on="product", right_on="item_name")
+
+### Concatenation / Stacking Dataframes / appending
+
+pd.concat([df1,df2], axis=0, ignore_index=True) # vertical stacking 
+pd.concat([df1,df2],axis = 1 ) side by side columns
+
+sales_q1 = pd.concat([sales_jan,sales_feb],axis = 0, ignore_index = True) 
+
+### Pivot tables 
+
+df.pivot_table(
+    values="quantity",
+    index="product",
+    columns="region",
+    aggfunc="sum"
+)
+Meaning:
+
+index → rows
+
+columns → new categories on top
+
+values → what you’re calculating
+
+aggfunc → sum / mean / count / etc.
+
+
+
+df[df["price">30000],("brand"=="Dell" | "brand"=="Dell")]]
+
+
+### Let's go finallll
+
+pd.read_csv()
+pd.read_excel()
+pd.read_json()
+pd.read_parquet()
+
+df.to_csv(index=False)
+df.to_parquet()
+
+pd.read_csv("file.csv", dtype=..., parse_dates=..., na_values=..., usecols=...)
+pd.read_csv("file.csv", chunksize=100000)      # large files
+df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
+df.drop_duplicates(inplace=True)
+df.replace({"N/A": None}, inplace=True)
+df["name"] = df["name"].str.strip()
+df.isna().sum()
+df.dropna(subset=["col"])
+df.fillna("Unknown")            # strings
+df.fillna(0)                    # numbers
+df["col"].fillna(df["col"].mean(), inplace=True)
+df["price"] = pd.to_numeric(df["price"], errors="coerce")
+df["date"] = pd.to_datetime(df["date"], errors="coerce", format="%Y-%m-%d")
+df["category"] = df["category"].astype("category")
+df[df["price"] > 500]
+df[df["brand"].isin(["Dell", "HP"])]
+df[(df["price"] > 500) & (df["stock"] < 20)]
+df.loc[df["quantity"] == 0, "quantity"] = None    # conditional update
+df["total"] = df["qty"] * df["price"]
+df["name_upper"] = df["name"].str.upper()
+df["clean_col"] = df["col"].apply(lambda x: x.strip().lower())
+df.groupby("product")["quantity"].sum()
+df.groupby("region")[["sales","profit"]].mean()
+
+df.groupby("category").agg({
+    "price": "mean",
+    "quantity": "sum",
+    "profit": "max"
+})
+pd.merge(df1, df2, on="id", how="inner")
+pd.merge(df1, df2, on="id", how="left")
+pd.merge(df1, df2, left_on="product", right_on="item_name", how="inner")
+pd.concat([df1, df2], axis=0, ignore_index=True)
+pd.melt(df, id_vars=["product"], value_vars=["jan","feb","mar"])
+df["year"] = df["date"].dt.year
+df["month"] = df["date"].dt.month
+df["day"] = df["date"].dt.day
+df["hour"] = df["date"].dt.hour
+df.resample("M")["sales"].sum()
+df["year"] = df["date"].dt.year
+df["month"] = df["date"].dt.month
+df["day"] = df["date"].dt.day
+df["hour"] = df["date"].dt.hour
+df.resample("M")["sales"].sum()
