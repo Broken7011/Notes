@@ -112,3 +112,22 @@ sales_df.iloc[:,0:2]
 
 
 ### RENAMING 
+df.rename(columns={"price": "unit_price", "brand": "company"}, inplace=True)
+sales_df.rename(columns={"price":"unit_price"},inplace=True)
+
+
+### Dropping column
+df.drop("age", axis=1, inplace=True)
+df.drop(["age","city"],axis =1 , inplace = True)
+axis = 1 Drop columns
+axis = 0 drop rows
+
+sales_df.drop("brand",axis=1, inplace=True)
+
+
+### Handling missing values, null values NaN
+df.dropna() # drop the rows
+df.fillna(0)  # fill the missing values
+df.fillna("Unknown")
+
+
