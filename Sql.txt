@@ -1,0 +1,1 @@
+employees(emp_id INT, first_name VARCHAR, last_name VARCHAR, dept_id INT, salary DECIMAL, hire_date DATE)
