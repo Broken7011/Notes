@@ -1,1 +1,60 @@
 employees(emp_id INT, first_name VARCHAR, last_name VARCHAR, dept_id INT, salary DECIMAL, hire_date DATE)
+
+Write an SQL query that returns the top 3 highest-paid employees, showing their full name (first_name || ' ' || last_name) and salary. Order results from highest to lowest salary.
+
+SELECT CONCAT(first_name," ",last_name),salary FROM employees ORDER BY salary DESC LIMIT 3
+
+Write an SQL query to return all employees hired after 1st January 2020, sorted by hire_date in ascending order.
+
+SELECT * FROM employees where hire_date > '2020-01-01' ORDER BY hire_date
+
+
+Write an SQL query to count how many employees belong to each dept_id.
+Sort the results by dept_id in ascending order.
+
+
+SELECT dept_id, count(emp_id) FROM employees GROUP BY dept_id ORDER BY dept_id
+
+
+Write an SQL query to find employees whose salary is between 50,000 and 80,000 (inclusive).
+Return emp_id, first_name, and salary.
+
+
+select emp_id,first_name,salary from employees WHERE salary BETWEEN 50000 AND 80000
+
+
+Write an SQL query that returns all employees whose first name starts with the letter 'A'.
+Return emp_id, first_name, and last_name.
+Sort results by first_name.
+
+select emp_id, first_name, last_name FROM employees WHERE LOWER(first_name) LIKE LOWER("A%") ORDER BY first_name
+### FOR CASE INSENSITIVE
+
+
+Write a query to return the number of employees hired each year.
+
+Output columns should be:
+
+hire_year
+
+employee_count
+
+(You’ll need to extract the year from hire_date.)
+
+Take your shot. One clean query.
+
+SELECT EXTRACT(year FROM hire_date) AS hire_year, COUNT(emp_id) FROM employees GROUP BY hire_year
+
+
+## Write a query to find the average salary per department.
+Return:
+
+dept_id
+
+avg_salary
+
+Sort by avg_salary in descending order.
+
+Your move.
+
+SELECT 
