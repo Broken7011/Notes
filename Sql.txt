@@ -48,13 +48,46 @@ SELECT EXTRACT(year FROM hire_date) AS hire_year, COUNT(emp_id) FROM employees G
 
 ## Write a query to find the average salary per department.
 Return:
-
 dept_id
-
 avg_salary
 
 Sort by avg_salary in descending order.
 
-Your move.
 
-SELECT 
+SELECT dept_id, AVG(salary) AS avg_salary FROM employees GROUP BY dept_id ORDER BY avg_salary DESC
+
+
+## Write a query to return all distinct department IDs, sorted in ascending order.
+
+SELECT distinct dept_id as unique FROM employees ORDER BY unique
+
+
+Write a query to find all employees who don’t have a department assigned (i.e., where dept_id is NULL).
+Return emp_id, first_name, dept_id.
+
+
+SELECT emp_id,first_name,dept_id FROM employees WHERE dept_id IS NULL 
+SELECT emp_id,first_name,last_name FROM employees WHERE last_name LIKE "%son" 
+
+Return all employees who were hired in the month of March, any year.
+SELECT emp_id,first_name,EXTRACT(month FROM hire_Date) as month FROM employees WHERE 
+EXTRACT(month FROM hire_Date) =3
+
+
+# Write a query to return employees whose salary is NOT between 60,000 and 90,000.
+SELECT emp_id,salary FROM employees WHERE salary NOT BETWEEN 60000 AND 90000
+
+Write a query to return the minimum and maximum salary in the company.
+SELECT MAX(salary) as max_salary, MIN(salary) as min_salary FROM employees
+
+### MIN() and MAX() on an empty table return NULL, not 0.
+
+# Write a query to list employees whose first name contains the substring “an” anywhere in the name.
+
+select emp_id, first_name FROM employees WHERE lower(first_name) LIKE LOWER("%an%")
+
+## Write a query to return all employees hired before the year 2018.
+
+SELECT emp_id,first_name,hire_date FROM employees WHERE EXTRACT(year FROM hire_date) < 2018 
+
+## Write a query to show how many employees each department has, but only include departments with more than 5 employees.
