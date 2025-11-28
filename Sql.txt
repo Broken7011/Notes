@@ -91,3 +91,74 @@ select emp_id, first_name FROM employees WHERE lower(first_name) LIKE LOWER("%an
 SELECT emp_id,first_name,hire_date FROM employees WHERE EXTRACT(year FROM hire_date) < 2018 
 
 ## Write a query to show how many employees each department has, but only include departments with more than 5 employees.
+
+select dept_id, COUNT(emp_id) AS employee_count FROM employee GROUP BY dept_id HAVING COUNT(emp_id) >5 
+
+## Write a query to return employees whose first name is NULL or last name is NULL.
+select emp_id , first_name , last_name FROM employees WHERE first_name is NULL OR last_name is NULL 
+
+
+## Write a query to return the second highest salary in the company.
+SELECT salary as Second_highest_salary FROM employees ORDER BY salary DESC LIMIT 1 OFFSET 1 
+
+## Write a query to return employees who earn more than the average salary of the entire company.
+
+SELECT emp_id,first_name,salary FROM employees WHERE salary > (Select AVG(salary) FROM employees)
+
+## Write a query to find all employees ordered by last name, but if two people have the same last name, sort them by their first name.
+
+Sekect emp_id , first_name, last_name FROM employees ordered by last_name , first_name
+
+
+## Write a query to return the total salary expense per department (sum of salaries).
+
+SELECT dept_id , SUM(salary) as Total_salary FROM employees GROUP BY dept_id
+
+
+## Write a query to return employees whose first name is at least 5 characters long.
+
+SELECT emp_id , first_name FROM employees WHERE first_name LIKE "_____%"
+
+## Write a query to return employees who were hired in the last 90 days from today.
+
+SELECT emp_id , first_name , hire_date FROM employees WHERE hire_date >= (CURRENT_DATE - INTERVAL 90 DAY)
+
+
+## Write a query to return employees whose salary is equal to the department’s minimum salary.
+
+SELECT e.emp_id , e.dept_id, e.salary FROM employees e WHERE salary = (SELECT MIN(salary) FROM employees WHERE dept_id = e.dept_id)
+
+
+## Write an SQL query to give a 10% raise to all employees in department dept_id = 3.
+
+UPDATE employees SET salary = salary * 1.10 WHERE dept_id =3 
+
+
+## Write a query to list employees hired in 2021, sorted by hire_date
+
+SELECT emp_id, first_name,hire_date FROM employees WHERE EXTRACT(year FROM hire_date) = 2021 ORDER BY hire_date
+
+
+## Write a query to list all employees whose first name is the same as someone else's first name (i.e., duplicate first names).
+
+SELECT first_name,emp_id FROM employees WHERE first_name IN(
+SELECT first_name FROM employees GROUP BY first_name HAVING COUNT(first_name) > 1
+)
+
+
+
+### Write a query that returns the dept_id which has the highest average salary, and the avg_salary value. Return exactly one row (the department with the top average).
+
+SELECT dept_id, AVG(salary) as high_salary FROM employees GROUP BY dept_id ORDER BY AVG(salary) DESC LIMIT 1  
+
+###  Write a query to return employees whose salary is within the top 3 salaries in the entire company.
+If multiple employees share a salary that falls within the top 3 salary values, include all of them.
+
+
+SELECT emp_id, first_name , salary FROM employees where salary in (select DISTINCT salary FROM employees 
+ORDER BY salary DESC LIMIT 3)
+
+
+### Write a query to return the employee(s) hired earliest in the company.
+
+If multiple employees were hired on the same earliest date, return all of them.
