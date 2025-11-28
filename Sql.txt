@@ -160,5 +160,7 @@ ORDER BY salary DESC LIMIT 3)
 
 
 ### Write a query to return the employee(s) hired earliest in the company.
-
 If multiple employees were hired on the same earliest date, return all of them.
+
+
+SELECT emp_id , first_name, hire_date FROM employees WHERE hire_date in (select MIN(hire_date) FROM employees)
