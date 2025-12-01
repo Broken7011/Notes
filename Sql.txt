@@ -251,3 +251,18 @@ Total spending = SUM(order_items.quantity * order_items.unit_price) across all o
 
 SELECT c.customer_id, c.first_name, c.last_name , SUM(oi.quantity * oi.unit_price) as total FROM customers c INNER JOIN
 orders o ON c.customer_id = o.customer_id INNER JOIN order_items oi ON o.order_id = oi.order_id GROUP BY c.customer_id ORDER BY SUM(oi.quantity * oi.unit_price) DESC limit 5
+
+
+
+### Find the total revenue per day.
+
+Revenue per day =
+SUM(order_items.quantity * order_items.unit_price)
+across all orders that happened on that day.
+
+SELECT order_date,SUM(oi.quantity * oi.unit_price) as Daily_revenue FROM orders o INNER JOIN order_items oi ON o.order_id = oi.order_id GROUP BY order_date ORDER BY order_date
+
+
+#### Write a query to find the total number of orders and total revenue for each customer.
+
+SELECT c.first_name , c.customer_id, SUM(oi.quantity * oi.unit_price) as total_revenue, count(order_id) as Total_Orders FROM customers C INNER JOIN orders o ON c.customer_id = o.customer_id INNER JOIN order_items oi ON o.order_id = oi.order_id GROUP BY c.customer_id ORDER BY SUM(oi.quantity * oi.unit_price) DESC 
