@@ -296,3 +296,69 @@ SELECT
 FROM cust_metrics
 WHERE total_orders >= 1
 ORDER BY avg_order_value DESC;
+
+
+### Find the 10-day moving average of daily revenue.
+First compute daily revenue as SUM(quantity * unit_price) per order_date.
+Then compute a 10-day moving average of that daily revenue (including the current day and the previous 9 days).
+Return:
+order_date
+daily_revenue
+moving_avg_10d
+Sort by order_date ascending.
+
+
+WITH daily_revenue AS (
+SELECT
+    o.order_date,
+    SUM(oi.quantity * oi.unit_price) AS daily_revenue
+  FROM orders o INNER JOIN
+  JOIN order_items oi ON o.order_id = oi.order_id
+  GROUP BY o.order_date
+)
+SELECT order_date, daily_revenue , ROUND(AVG(daily_revenue) OVER( ORDER BY order_date ROWS BETWEEN 9 PRECEDING
+AND CURRENT ROW), 2 ) AS moving avg_10d FROM daily revenue order 
+
+
+###  Categorize each order as 'High Value' (amount > 1000), 'Medium Value' (amount between 200 and 1000), or 'Low Value' (amount < 200). Show order_id, amount, and new category. Order by amount DESC
+
+
+SELECT order_id , amount,
+  CASE
+  WHEN amount > 1000 THEN "High Value"
+  WHEN amount BETWEEN 200 and 1000 THEN 'Medium Value'
+  ELSE 'Low Value'
+  END as value_category
+FROM orders ORDER BY amount DESC;
+
+
+### Create a 'Status Priority' column using CASE: 'completed' = 'Priority 1', 'pending' = 'Priority 2', 'cancelled' = 'Priority 3'. Show customer_id, status, and priority. Order by customer_id, then priority DESC.
+
+SELECT customer_id , status,
+ CASE 
+  WHEN status = 'completed' THEN 'priority 1'
+  WHEN status = 'pending' THEN 'priority 2'
+  WHEN status = 'cancelled' THEN 'priority 3' 
+ END AS priority 
+FROM orders ORDER BY customer_id,priority DESC
+
+
+### Create 'Order Age' category: Orders before '2025-01-20' = 'Old', on/after '2025-01-20' = 'New'. Show order_id, order_date, and category. Order by order_date ASC.
+
+
+SELECT order_id, order_date,
+CASE
+  WHEN order_date < '2025-01-20' THEN 'Old'
+  WHEN order_date >= '2025-01-20' THEN 'New'
+END AS Category
+FROM orders ORDER BY order_date 
+
+
+### Create 'Customer Tier' based on total spend per customer: >2000 = 'VIP', 500-2000 = 'Gold', <500 = 'Silver'. Show customer_id, total_amount, and tier. Order by total_amount DESC.
+
+SELECT customer_id, total_amount ,
+CASE 
+ WHEN 
+  
+
+
