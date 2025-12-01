@@ -276,8 +276,23 @@ total_orders — number of orders they placed
 avg_order_value — average order value per order for that customer (use total revenue per customer ÷ number of orders)
 Only include customers who placed at least 1 order.
 
-with avg AS (
-SELECT SUM(oi.quantity * oi.unit_price) / count(o.order_id) FROM orders o INNER JOIN order_items oi ON o.order_id = oi.order_id )
-
-
-SELECT c.first_name , c.customer_id, SUM(oi.quantity * oi.unit_price) as total_revenue, count(o.order_id) as Total_Orders, SUM(oi.quantity * oi.unit_price) / count(o.order_id) As average_order FROM customers C INNER JOIN orders o ON c.customer_id = o.customer_id INNER JOIN order_items oi ON o.order_id = oi.order_id GROUP BY c.customer_id,c.first_name HAVING count(order_id)>=1 ORDER BY (total_revenue / Total_Orders) DESC 
+WITH cust_metrics AS (
+  SELECT
+    c.customer_id,
+    c.first_name,
+    COUNT(DISTINCT o.order_id)     AS total_orders,
+    SUM(oi.quantity * oi.unit_price) AS total_revenue
+  FROM customers c
+  JOIN orders o ON c.customer_id = o.customer_id
+  JOIN order_items oi ON o.order_id = oi.order_id
+  GROUP BY c.customer_id, c.first_name
+)
+SELECT
+  customer_id,
+  first_name,
+  total_orders,
+  total_revenue,
+  total_revenue / total_orders AS avg_order_value
+FROM cust_metrics
+WHERE total_orders >= 1
+ORDER BY avg_order_value DESC;
