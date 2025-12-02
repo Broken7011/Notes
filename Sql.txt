@@ -423,3 +423,16 @@ FROM orders
 GROUP BY order_id
 ORDER BY order_date
 
+
+#### 
+#### 'Category Popularity' - Most popular category per customer gets 'Top', others 'Other'. Show customer_id, product_category, flag. Order by customer_id, category count DESC.
+
+SELECT customer_id , product_category ,
+  CASE 
+    WHEN RANK() OVER (PARTITION BY customer_id ORDER BY COUNT(*) DESC) = 1
+    THEN 'Top'
+    ELSE 'Other'
+ END AS popularity_flag
+FROM orders
+GROUP BY customer_id , Product_category
+ORDER BY customer_id , COUNT(*) DESC;
