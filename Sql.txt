@@ -436,3 +436,32 @@ SELECT customer_id , product_category ,
 FROM orders
 GROUP BY customer_id , Product_category
 ORDER BY customer_id , COUNT(*) DESC;
+
+
+
+
+## For completed orders only, categorize as 'High Ticket' (>1000), 'Mid Ticket' (200-1000), 'Low Ticket' (<200). Show order_id, amount, category. Order by amount DESC.
+
+SELECT order_id, amount 
+  CASE 
+   WHEN amount > 1000 THEN 'Hight Ticket'
+   WHEN amount BETWEEN 200 AND 1000 THEN 'Mid Ticket'
+   ELSE 'Low Ticket'
+  END AS category
+FROM orders
+WHERE status = 'completed'
+ORDER BY amount DESC
+
+
+##  Multi-condition 'Order Type': Electronics + completed = 'Premium Sale', Clothing + completed = 'Regular Sale', ANY cancelled = 'Lost Sale', ELSE 'Pending Review'. Show order_id, product_category, status, type. Order by customer_id, order_id.
+
+
+SELECT order_id , product_category, status,
+  CASE
+    WHEN product_category = 'Electronics' AND status = 'completed' THEN 'Premium Sales'
+    WHEN product category = 'Clothing' AND status = 'completed' THEN 'Regular Sales'
+    WHEN status = 'cancelled' THEN 'Lost Sale'
+    ELSE 'Pending Review'
+  END as type
+FROM orders
+ORDER BY customer_id, order_id
