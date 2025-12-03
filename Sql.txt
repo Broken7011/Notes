@@ -478,4 +478,13 @@ FROM orders
 ORDER BY customer_id , order_id 
 
 
-Nested CASE for Electronics only: If amount >1000 = 'High End Electronics', <=1000 = 'Budget Electronics'; Other categories = 'Non-Electronics'. Show order_id, product_category, amount, category_type. Order by amount DESC.
+## Nested CASE for Electronics only: If amount >1000 = 'High End Electronics', <=1000 = 'Budget Electronics'; Other categories = 'Non-Electronics'. Show order_id, product_category, amount, category_type. Order by amount DESC.
+
+
+SELECT order_id , product_category,amount,
+  CASE 
+   WHEN product_category = 'Electronics' THEN CASE WHEN amount > 1000 THEN 'High End Electronics' ELSE 'Budget Electronics' END
+   ELSE 'Non-Electronics'
+   END as category_type
+FROM orders
+ORDER BY amount DESC
