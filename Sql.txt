@@ -465,3 +465,17 @@ SELECT order_id , product_category, status,
   END as type
 FROM orders
 ORDER BY customer_id, order_id
+
+
+### Flag 'Repeat Buyer' per order: 'Repeat' if customer has 2+ total orders, else 'New'. Show customer_id, order_id, flag. Order by customer_id, order_id.
+
+SELECT customer_id, order_id,
+  CASE
+    WHEN COUNT(*) OVER (PARTITION BY customer_id) > 2 THEN 'Repeat'
+    ELSE 'New'
+  END as flag
+FROM orders
+ORDER BY customer_id , order_id 
+
+
+Nested CASE for Electronics only: If amount >1000 = 'High End Electronics', <=1000 = 'Budget Electronics'; Other categories = 'Non-Electronics'. Show order_id, product_category, amount, category_type. Order by amount DESC.
