@@ -559,4 +559,6 @@ ORDER BY customer_id, order_date
 
 ###### WINDOW FUNCTIONS
 
+Rank all orders by amount DESC (1=highest). Show order_id, amount, rank. Order by rank.
 
+SELECT order_id, amount, RANK () OVER (ORDER BY amount DESC) as rank FROM orders ORDER BY rank 
